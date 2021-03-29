@@ -1,0 +1,176 @@
+##################
+### INIZIO Script 2021-03-27 12:50:45
+2021-03-27 00:50:49 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 00:50:49 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 00:50:49 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 01:02:14
+2021-03-27 01:02:17 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 01:02:17 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 01:02:17 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 01:05:45
+2021-03-27 01:05:46 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 01:05:46 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 01:05:46 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 01:08:47
+2021-03-27 01:08:48 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 01:08:48 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 01:08:48 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 02:52:46
+2021-03-27 02:52:48 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 02:52:48 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 02:52:48 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 02:59:40
+2021-03-27 02:59:42 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 02:59:42 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 02:59:42 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 03:01:45
+2021-03-27 03:01:46 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:01:46 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:01:46 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 03:02:58
+2021-03-27 03:03:00 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:03:00 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:03:00 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 03:03:07
+2021-03-27 03:03:08 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:03:08 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:03:08 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 03:04:23
+2021-03-27 03:04:24 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:04:24 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:04:24 INFO: Bot Init successiful, Exit for test param
+##################
+### INIZIO Script 2021-03-27 03:04:28
+2021-03-27 03:04:29 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:04:29 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:04:52 INFO: Private message from: FabryMazzu
+2021-03-27 03:04:52 INFO: The command is not in the list --> /start
+2021-03-27 03:06:19 INFO: Private message from: FabryMazzu
+2021-03-27 03:06:19 INFO: SendMessage: Hello World!To: 52265879
+2021-03-27 03:06:43 INFO: Private message from: FabryMazzu
+2021-03-27 03:06:43 INFO: The command is /help
+2021-03-27 03:06:43 INFO: SendMessage: Here is all my commandsTo: 52265879
+2021-03-27 03:06:51 INFO: Private message from: FabryMazzu
+2021-03-27 03:06:51 INFO: The command is not in the list --> /No
+2021-03-27 03:17:29 INFO: Private message from: FabryMazzu
+2021-03-27 03:17:29 INFO: The command is not in the list --> /Yes
+2021-03-27 03:17:41 INFO: Private message from: FabryMazzu
+2021-03-27 03:17:41 INFO: The command is not in the list --> /No
+2021-03-27 03:17:45 INFO: Private message from: FabryMazzu
+2021-03-27 03:17:45 INFO: The command is not in the list --> /CatFact
+2021-03-27 03:17:55 INFO: Private message from: FabryMazzu
+2021-03-27 03:17:55 INFO: The command is /help
+2021-03-27 03:17:55 INFO: SendMessage: Here is all my commandsTo: 52265879
+2021-03-27 03:18:07 INFO: Private message from: FabryMazzu
+2021-03-27 03:18:07 INFO: The command is /Restart
+2021-03-27 03:18:07 INFO: SendMessage: 2021-03-27 03:18:07 - Restarting the botTo: 52265879
+##################
+### INIZIO Script 2021-03-27 03:27:01
+2021-03-27 03:27:02 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:27:02 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:27:02 INFO: Private message from: FabryMazzu
+2021-03-27 03:27:02 INFO: SendMessage: Sorry, you are not my Admin.To: 52265879
+2021-03-27 03:27:03 INFO: The command is not in the list --> /restart
+2021-03-27 03:45:04 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:45:04 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:45:04 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 03:45:44 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:45:44 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:45:44 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 03:47:28 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:47:28 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:47:28 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 03:47:35 INFO: Private message from: FabryMazzu
+2021-03-27 03:47:35 INFO: The command is /help
+2021-03-27 03:47:35 INFO: SendMessage: Here is all my commandsTo: 52265879
+2021-03-27 03:47:37 INFO: Private message from: FabryMazzu
+2021-03-27 03:47:37 INFO: The command is not in the list --> /CatFact
+2021-03-27 03:48:49 INFO: Private message from: FabryMazzu
+2021-03-27 03:48:49 INFO: The command is /Restart
+2021-03-27 03:48:49 INFO: SendMessage: 2021-03-27 03:48:49 - Restarting the botTo: 52265879
+2021-03-27 03:49:14 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:49:14 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:49:14 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 03:49:14 INFO: Private message from: FabryMazzu
+2021-03-27 03:49:14 INFO: SendMessage: Sorry, you are not my Admin.To: 52265879
+2021-03-27 03:49:14 INFO: The command is not in the list --> /restart
+2021-03-27 03:51:19 INFO: Private message from: FabryMazzu
+2021-03-27 03:51:19 INFO: The command is /help
+2021-03-27 03:51:19 INFO: SendMessage: Here is all my commandsTo: 52265879
+2021-03-27 03:51:21 INFO: Private message from: FabryMazzu
+2021-03-27 03:51:21 INFO: The command is not in the list --> /Yes
+2021-03-27 03:51:24 INFO: Private message from: FabryMazzu
+2021-03-27 03:51:24 INFO: The command is not in the list --> /No
+2021-03-27 03:51:35 INFO: Private message from: FabryMazzu
+2021-03-27 03:51:35 INFO: The command is not in the list --> /CatFact
+2021-03-27 03:55:29 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:55:29 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:55:29 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 03:55:38 INFO: Private message from: FabryMazzu
+2021-03-27 03:55:38 INFO: SendMessage: CatFactTo: 52265879
+2021-03-27 03:56:16 INFO: Private message from: FabryMazzu
+2021-03-27 03:56:16 INFO: SendMessage: CatFactTo: 52265879
+2021-03-27 03:56:26 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 03:56:26 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 03:56:26 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 03:56:29 INFO: Private message from: FabryMazzu
+2021-03-27 04:06:13 INFO: Private message from: FabryMazzu
+2021-03-27 04:06:22 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 04:06:22 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 04:06:22 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 04:06:23 INFO: Private message from: FabryMazzu
+2021-03-27 04:06:24 INFO: SendMessage: A female cat is called a queen or a molly.To: 52265879
+2021-03-27 04:06:30 INFO: Private message from: FabryMazzu
+2021-03-27 04:06:30 INFO: SendMessage: Cats lived with soldiers in trenches, where they killed mice during World War I.To: 52265879
+2021-03-27 04:06:32 INFO: Private message from: FabryMazzu
+2021-03-27 04:06:32 INFO: SendMessage: In ancient Egypt, when a family cat died, all family members would shave their eyebrows as a sign of mourning.To: 52265879
+2021-03-27 04:06:33 INFO: Private message from: FabryMazzu
+2021-03-27 04:06:33 INFO: SendMessage: The first formal cat show was held in England in 1871; in America, in 1895.To: 52265879
+2021-03-27 04:06:34 INFO: Private message from: FabryMazzu
+2021-03-27 04:06:34 INFO: SendMessage: A healthy cat has a temperature between 38 and 39 degrees Celcius.To: 52265879
+2021-03-27 04:07:40 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 04:07:40 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 04:07:40 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 04:07:46 INFO: Private message from: FabryMazzu
+2021-03-27 04:08:42 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 04:08:42 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 04:08:42 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 04:08:46 INFO: Private message from: FabryMazzu
+2021-03-27 04:09:40 INFO: Private message from: FabryMazzu
+2021-03-27 04:09:40 INFO: SendMessage: Some notable people who disliked cats:  Napoleon Bonaparte, Dwight D. Eisenhower, Hitler.To: 52265879
+2021-03-27 04:10:03 INFO: Private message from: FabryMazzu
+2021-03-27 04:10:03 INFO: SendMessage: A cat will tremble or shiver when it is extreme pain.To: 52265879
+2021-03-27 04:13:24 INFO: Private message from: FabryMazzu
+2021-03-27 04:13:24 INFO: The command is /Restart
+2021-03-27 04:13:24 INFO: SendMessage: 2021-03-27 04:13:24 - Restarting the botTo: 52265879
+2021-03-27 04:18:21 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 04:18:21 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 04:18:21 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 04:18:21 INFO: Private message from: FabryMazzu
+2021-03-27 04:18:21 INFO: SendMessage: Sorry, you are not my Admin.To: 52265879
+2021-03-27 04:18:21 INFO: The command is not in the list --> /restart
+2021-03-27 04:18:48 INFO: Private message from: FabryMazzu
+2021-03-27 04:18:48 INFO: The command is /Restart
+2021-03-27 04:18:48 INFO: SendMessage: 2021-03-27 04:18:48 - Restarting the botTo: 52265879
+2021-03-27 04:19:08 INFO: APsBOT_Base APsBOT_Base_Bot  connected!
+2021-03-27 04:19:08 INFO: Find APsBOT_Base_Bot in Telegram and send him a message - it will be displayed here
+2021-03-27 04:19:08 INFO: BotID = 1705298974 , BotName = APsBOT_Base , BotUsername = APsBOT_Base_Bot 
+2021-03-27 04:19:09 INFO: Private message from: FabryMazzu
+2021-03-27 04:19:09 INFO: SendMessage: Sorry, you are not my Admin.To: 52265879
+2021-03-27 04:19:09 INFO: The command is not in the list --> /restart
+2021-03-27 04:19:31 INFO: Private message from: FabryMazzu
+2021-03-27 04:19:31 INFO: SendMessage: Hello World!To: 52265879
+2021-03-27 04:19:35 INFO: Private message from: FabryMazzu
+2021-03-27 04:19:35 INFO: SendMessage: Complimenti hai scritto una delle prime 3 lettere dell'alfabeto!To: 52265879
+2021-03-27 04:20:11 INFO: Private message from: FabryMazzu
+2021-03-27 04:20:19 INFO: Private message from: FabryMazzu
+2021-03-27 04:20:19 INFO: SendMessage: Complimenti @FabryMazzu stai eseguendo il Test1To: 52265879

@@ -1,13 +1,19 @@
 ﻿
-
+Param( 
+    [Parameter(Mandatory=$true, Position=0, ValueFromPipeline=$true)][String]$BotName = "NoName",
+    [Parameter(Mandatory=$false, Position=1, ValueFromPipeline=$true)][String]$botkey = '1705298974:AAGJQb4M1tqExKQPgs_L_78kHrLoZkGF9GY',
+    [Parameter(Mandatory=$false, Position=2, ValueFromPipeline=$true)][String]$FilePath = "C:\Tmp\",
+    [Parameter(Mandatory=$false, Position=3, ValueFromPipeline=$true)][switch]$TestBot
+    )
+Process{
 ########################################################################
-# AloneBot
-[string]$botkey = '105178527:AAGuoFO5BqUL--iPTP36qQZDrkfSNF6FjjI'
-
 # Inizialization
-[string]$ScriptName = 'AloneBot.ps1'
-[string]$BotName = 'AloneBot'
-$host.ui.RawUI.WindowTitle = $ScriptName + ' - ' + $botkey 
+[string]$ScriptName = $BotName
+[string]$BotName = $BotName
+[string]$AdminUserNames = 'FabryMazzu'
+[switch]$FileBackupAtLaunch = $true
+
+$host.ui.RawUI.WindowTitle = $ScriptName + ' - ' + $FilePath  
 $runningPath = Split-Path -Path $SCRIPT:MyInvocation.MyCommand.Path -Parent
 # $runningPath = "$ENV:OneDrive\_MyPs\PS-Repo\MyProjects\Bots\AloneBot"
 $dtInizio = (Get-Date -format 'yyyy-MM-dd hh:mm:ss').tostring()
@@ -15,19 +21,22 @@ $dtlog = (Get-Date -format 'yyyyMMdd').tostring()
 $Error.Clear()
 Start-Sleep -Seconds 1
 # Get the local Resources 
-    $LogPath = "$runningPath\logs\"
-    $ExtFunctionsPath = "$runningPath\ExternalFunctions\"
-    $ResFilesPath = "$runningPath\Files\"
-    $ArchivePath = "$runningPath\Archive\"
-    $TmpStoragePath = "$runningPath\Archive\TmpStorage\"
-    $BckPath = "$runningPath\Archive\Bck\"
+#if ($FilePath = "C:\Tmp") {$FilePath = "C:\Tmp\$BotName"}
+$FilePath = $FilePath + "\$BotName"
+$LogPath = "$runningPath\logs\"
+$ExtFunctionsPath = "$runningPath\Functions\"
+$ResFilesPath = "$runningPath\ResourceFiles\"
+$LogFile = "$LogPath\log-$dtlog.log"
+$ErrorsFile = "$LogPath\Errors-$dtlog.log"
+if (-not (Test-Path $FilePath)) {mkdir $FilePath}
+    $ArchivePath = "$FilePath\Archive\"
+    $TmpStoragePath = "$FilePath\TmpStorage\"
+    $BckPath = "$FilePath\Bck\"
     #Files
-    $UserDBFile = "$LogPath\User.json"
-    $ChatDBFile = "$LogPath\Chat.json"
-    $MessageDBFile = "$LogPath\json-$dtlog.json"
-    $LogFile = "$LogPath\log-$dtlog.log"
-    $ErrorsFile = "$LogPath\Errors-$dtlog.log"
-    $TranscriptFile = "$LogPath\Transcript-$dtlog.txt"
+    $UserDBFile = "$FilePath\Users.json"
+    $ChatDBFile = "$FilePath\Chats.json"
+    $MessageDBFile = "$FilePath\jsons-$dtlog.json"
+    $TranscriptFile = "$FilePath\Transcript-$dtlog.txt"
     $imageFile = "$ResFilesPath\t_logo.png"
     $WipPhoto = "$ResFilesPath\Under-construction.png"
 
@@ -44,39 +53,45 @@ $timeout = 59
 $offset = 0
 $SecondsToSleep = 2
 $Backlog = $True
-[switch]$verbose = $true
 #Set Verbose Output
-$oldverbose = $VerbosePreference
 if($verbose) { $VerbosePreference = 'continue' }
 # Init Variable
 $Firststart = $true
 [string]$uploadedPhotoId = $null
 [string]$uploadedDocumentId = $null
 <##########################>
-#LogInit
-. $ExtFunctionsPath\Utils.ps1
-. $ExtFunctionsPath\Init-Logs.ps1
-. $ExtFunctionsPath\Load-Db.ps1
-<##########################>
 # Load Bot Api
 . $ExtFunctionsPath\Load-BotLinks.ps1
-
 <##########################
 # Load External functions
 ##########################>
-. $ExtFunctionsPath\Load-BotFunctions.ps1
+. $ExtFunctionsPath\Utils.ps1
 . $ExtFunctionsPath\Test-URI.ps1
 . $ExtFunctionsPath\Write-log.ps1
+#LogInit
+Init-LogFile
 ####################################################
 # Command Functions
+. $ExtFunctionsPath\Load-BotFunctions.ps1
 . $ExtFunctionsPath\Load-CommandFunctions.ps1
 ####################################################
 ####################################################
 # Bot initialization
+## Load DayMessageDB
+Load-MessageDB
+## Load UserDB
+Load-UserDB
+## Load ChatDB
+Load-ChatDB
+# Backup DBFiles
+if ($FileBackupAtLaunch) { Backup-DBFiles } 
 # Test Connection
 do {
     $Res = Test-InternetConnection
-    if ($Res -eq 'KO') {Start-Sleep -Seconds $timeout} 
+    if ($Res -eq 'KO') { 
+        Write-log -Path $LogFile -Level Error -LogMessage 'Internet connection Down...'
+        Write-Verbose -Message 'Internet connection Down...' 
+        Start-Sleep -Seconds $timeout} 
 } while ($Res -eq 'KO')
 
 # Test Bot Init
@@ -99,7 +114,12 @@ $Firststart = $true
 $BotID = $json.result.id
 $BotName = $json.result.first_name
 $BotUsername = $json.result.username
+Write-log -Path $LogFile -Level Info -LogMessage ( "BotID = $BotID , BotName = $BotName , BotUsername = $BotUsername ")
 
+if ($TestBot) {
+    Write-log -Path $LogFile -Level Info -LogMessage ( 'Bot Init successiful, Exit for test param')
+    Exit 
+}
 # Set last Offset to avoid backlog
 if (-not $Backlog) { 
 	# getting the update from the end of the queque. All previous updates will forgotten
@@ -126,20 +146,17 @@ if (-not $Backlog) {
         # Se   un nuovo giorno devo reinizializzare i file dei log e alcune variabili
         $ThisDay = (Get-Date -format 'yyyyMMdd').tostring()
         if ( $dtlog -ne $ThisDay ) { 
+            $dtlog = $ThisDay
             $MessageDBFile = "$LogPath\json-$dtlog.json"
             $LogFile = "$LogPath\log-$dtlog.log"
             $ErrorsFile = "$LogPath\Errors-$dtlog.log"
             $TranscriptFile = "$LogPath\Transcript-$dtlog.txt"
-            if (-not (Test-Path -Path $LogFile)) {
-                '##################' | Add-Content -Path $LogFile
-                "### INIZIO Script $dtInizio" | Add-Content -Path $LogFile
-                "### INIZIO TranScript $dtInizio" | Add-Content -Path $TranscriptFile
-            }
+            Init-LogFile
         }
 
         Do {
             $json = Invoke-WebRequest -Uri $getUpdatesLink -Body @{offset=$offset;timeout=$timeout} | ConvertFrom-Json
-            if (-not $json) { Start-Sleep -Seconds $SecondsToSleep }
+            if (-not $json) { Write-Verbose -Message '(Press ctrl + c to stop listening and quit)';  Start-Sleep -Seconds $SecondsToSleep }
         } Until ($json)
 
         $l = $json.result.length
@@ -149,10 +166,13 @@ if (-not $Backlog) {
         # Cycle append
         ## ToDo : Find the wai to add a single Json Item in the best way
         ## Message Json
-        if (-not (Test-Path -Path $MessageDBFile)) { New-Item -Path $MessageDBFile -ItemType File | Out-Null }
-        $MessageJson =  Get-Content -Path $MessageDBFile -Raw | ConvertFrom-Json
-        $MessageJsonClone = $MessageJson
-        if ($MessageJsonClone -eq $null) { $FinalJson = $json.result } Else { $FinalJson = $MessageJsonClone + $json.result } 
+        Load-MessageDB
+        $DayMessageDBClone = $DayMessageDB
+        if ($null -eq $DayMessageDBClone ) { 
+                $FinalJson = $json.result 
+            } Else {
+                     $FinalJson = $DayMessageDBClone + $json.result 
+                    } 
         $FinalJson | ConvertTo-Json -depth 100 | Out-File -FilePath $MessageDBFile
         Write-Verbose -Message '// Message Json file append' 
 
@@ -198,12 +218,12 @@ if (-not $Backlog) {
                 Else {  Write-log -Path $LogFile -Level Info -LogMessage ('Private message from userid: ' + $json.result[$i].message.from.id )}
             }
             # Optional json parts
-            if ($json.result[$i].message.sticker.file_id -ne $null) { Write-Verbose -Message 'Message sticker.file_id: ' ; Write-Verbose -Message $json.result[$i].message.sticker.file_id } 
-            if ($json.result[$i].message.voice.file_id -ne $null) { GetFile -file_id $json.result[$i].message.voice.file_id }
-            if ($json.result[$i].message.document.file_id -ne $null) { GetFile -file_id $json.result[$i].message.document.file_id -file_name $json.result[$i].message.document.file_name }
+            if ($null -ne $json.result[$i].message.sticker.file_id) { Write-Verbose -Message 'Message sticker.file_id: ' ; Write-Verbose -Message $json.result[$i].message.sticker.file_id } 
+            if ($null -ne $json.result[$i].message.voice.file_id) { GetFile -file_id $json.result[$i].message.voice.file_id }
+            if ($null -ne $json.result[$i].message.document.file_id) { GetFile -file_id $json.result[$i].message.document.file_id -file_name $json.result[$i].message.document.file_name }
             
             #Verify if the message contains Text & Commands
-            if ($json.result[$i].message.text -ne $null) { 
+            if ($null -ne $json.result[$i].message.text) { 
                 Write-Verbose -Message $json.result[$i].message.text 
                 $MessageText = $json.result[$i].message.text
                 ## Aggiungo al transcript
@@ -217,9 +237,10 @@ if (-not $Backlog) {
                     'Ciao' { SendMessage -Message 'Hello World!' -ToChatID $json.result[$i].message.chat.id }
                     {$_ -in 'A','B','C'} { SendMessage -Message "Complimenti hai scritto una delle prime 3 lettere dell'alfabeto!" -ToChatID $json.result[$i].message.chat.id }
                     'Test1' { SendMessage -Message ('Complimenti @' + $json.result[$i].message.from.username + ' stai eseguendo il Test1') -ToChatID $json.result[$i].message.chat.id -reply_to_message_id $json.result[$i].message.message_id -parse_mode 'Markdown' }
+                    'CatFact' { SendMessage -Message (CatFact) -ToChatID $json.result[$i].message.chat.id }
                     Default {}
                 }
-                ### Elaboro Comandi Al Bot
+                ### Process bot's commands 
                 switch -wildcard ($MessageText) {
                     '/help'     {
                                 CmdHelp
@@ -227,7 +248,7 @@ if (-not $Backlog) {
                                 }
 
                     '/Restart'  {
-                                if (($json.result[$i].message.from.username -eq 'FabryMazzu') -and (-not $Firststart)) { CmdRestart }
+                                if (($json.result[$i].message.from.username -in $AdminUserNames) -and (-not $Firststart)) { CmdRestart }
                                     else {
                                         SendMessage -Message  'Sorry, you are not my Admin.' -ToChatID $json.result[$i].message.chat.id -reply_to_message_id $json.result[$i].message.message_id
                                     }
@@ -238,12 +259,15 @@ if (-not $Backlog) {
                                 }
 
                     "/Restart@$botname"  {
-                                if (($json.result[$i].message.from.username -eq 'FabryMazzu') -and (-not $Firststart)) { CmdRestart }
+                                if (($json.result[$i].message.from.username -in $AdminUserNames) -and (-not $Firststart)) { CmdRestart }
                                     else {
                                         SendMessage -Message  'Sorry, you are not my Admin.' -ToChatID $json.result[$i].message.chat.id -reply_to_message_id $json.result[$i].message.message_id
                                     }
                                 }
-                    '/*'        {Write-log -Path $LogFile -Level Info -LogMessage ('The command is not in the list --> ' + $MessageText) ; Write-Verbose -Message 'The command is not in the list --> ' -Message + -ErrorAction $MessageText }
+                    '/*'        {
+                                Write-log -Path $LogFile -Level Info -LogMessage ('The command is not in the list --> ' + $MessageText) 
+                                Write-Verbose -Message ('The command is not in the list --> ' + $MessageText) 
+                            }
                     default {
                             # "This is not a command."
                             # Write-log -Path $LogFile -Level Info -LogMessage ("This is not a command.")
@@ -261,8 +285,8 @@ if (-not $Backlog) {
         # Write-Err -ErrorsFile $ErrorsFile 
     }
 
-$VerbosePreference = $oldverbose
-
+# $VerbosePreference = $oldverbose
+}
 <#
 
     #Log the message text in the Transcriptline
