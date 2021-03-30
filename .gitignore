@@ -1,0 +1,12 @@
+# Log Files
+*.log
+
+# Archive Files
+*.zip
+
+# Bot Generated Files
+Users.json
+Chat.json
+Transcript-*.txt
+jsons-*.json
+messages-*.json

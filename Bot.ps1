@@ -147,7 +147,7 @@ if (-not $Backlog) {
         $ThisDay = (Get-Date -format 'yyyyMMdd').tostring()
         if ( $dtlog -ne $ThisDay ) { 
             $dtlog = $ThisDay
-            $MessageDBFile = "$LogPath\json-$dtlog.json"
+            $MessageDBFile = "$LogPath\messages-$dtlog.json"
             $LogFile = "$LogPath\log-$dtlog.log"
             $ErrorsFile = "$LogPath\Errors-$dtlog.log"
             $TranscriptFile = "$LogPath\Transcript-$dtlog.txt"
