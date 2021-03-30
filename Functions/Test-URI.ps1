@@ -1,7 +1,7 @@
 #requires -version 4.0
 
 Function Test-URI {
-<#
+  <#
 .Synopsis
 Test a URI or URL
 .Description
@@ -74,56 +74,56 @@ http://jdhitsolutions.com/blog/essential-powershell-resources/
 Invoke-WebRequest
 #>
  
-[cmdletbinding(DefaultParameterSetName="Default")]
-Param(
-[Parameter(Position=0,Mandatory,HelpMessage="Enter the URI path starting with HTTP or HTTPS",
-ValueFromPipeline,ValueFromPipelineByPropertyName)]
-[ValidatePattern( "^(http|https)://" )]
-[Alias("url")]
-[string]$URI,
-[Parameter(ParameterSetName="Detail")]
-[Switch]$Detail,
-[ValidateScript({$_ -ge 0})]
-[int]$Timeout = 30
-)
+  [cmdletbinding(DefaultParameterSetName = "Default")]
+  Param(
+    [Parameter(Position = 0, Mandatory, HelpMessage = "Enter the URI path starting with HTTP or HTTPS",
+      ValueFromPipeline, ValueFromPipelineByPropertyName)]
+    [ValidatePattern( "^(http|https)://" )]
+    [Alias("url")]
+    [string]$URI,
+    [Parameter(ParameterSetName = "Detail")]
+    [Switch]$Detail,
+    [ValidateScript( { $_ -ge 0 })]
+    [int]$Timeout = 30
+  )
  
-Begin {
+  Begin {
     Write-Verbose -Message "Starting $($MyInvocation.Mycommand)" 
     Write-Verbose -message "Using parameter set $($PSCmdlet.ParameterSetName)" 
-} #close begin block
+  } #close begin block
  
-Process {
+  Process {
  
     Write-Verbose -Message "Testing $uri"
     Try {
-     #hash table of parameter values for Invoke-Webrequest
-     $paramHash = @{
-     UseBasicParsing = $True
-     DisableKeepAlive = $True
-     Uri = $uri
-     Method = 'Head'
-     ErrorAction = 'stop'
-     TimeoutSec = $Timeout
-    }
+      #hash table of parameter values for Invoke-Webrequest
+      $paramHash = @{
+        UseBasicParsing  = $True
+        DisableKeepAlive = $True
+        Uri              = $uri
+        Method           = 'Head'
+        ErrorAction      = 'stop'
+        TimeoutSec       = $Timeout
+      }
  
-    $test = Invoke-WebRequest @paramHash
+      $test = Invoke-WebRequest @paramHash
  
-     if ($Detail) {
+      if ($Detail) {
         $test.BaseResponse | 
-        Select ResponseURI,ContentLength,ContentType,LastModified,
-        @{Name="Status";Expression={$Test.StatusCode}}
-     } #if $detail
-     else {
-       if ($test.statuscode -ne 200) {
-            #it is unlikely this code will ever run but just in case
-            Write-Verbose -Message "Failed to request $uri"
-            write-Verbose -message ($test | out-string)
-            $False
-         }
-         else {
-            $True
-         }
-     } #else quiet
+        Select ResponseURI, ContentLength, ContentType, LastModified,
+        @{Name = "Status"; Expression = { $Test.StatusCode } }
+      } #if $detail
+      else {
+        if ($test.statuscode -ne 200) {
+          #it is unlikely this code will ever run but just in case
+          Write-Verbose -Message "Failed to request $uri"
+          write-Verbose -message ($test | out-string)
+          $False
+        }
+        else {
+          $True
+        }
+      } #else quiet
      
     }
     Catch {
@@ -132,25 +132,25 @@ Process {
       if ($Detail) {
         #most likely the resource is 404
         $objProp = [ordered]@{
-        ResponseURI = $uri
-        ContentLength = $null
-        ContentType = $null
-        LastModified = $null
-        Status = 404
+          ResponseURI   = $uri
+          ContentLength = $null
+          ContentType   = $null
+          LastModified  = $null
+          Status        = 404
         }
         #write a matching custom object to the pipeline
         New-Object -TypeName psobject -Property $objProp
  
-        } #if $detail
+      } #if $detail
       else {
         $False
       }
     } #close Catch block
-} #close Process block
+  } #close Process block
  
-End {
+  End {
     Write-Verbose -Message "Ending $($MyInvocation.Mycommand)"
-} #close end block
+  } #close end block
  
 } #close Test-URI Function
 

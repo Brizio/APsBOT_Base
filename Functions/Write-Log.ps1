@@ -1,28 +1,28 @@
 function Write-log {
     Param  (
-        [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
         [ValidateNotNullOrEmpty()]
         [Alias("LogContent")]
         [string]$LogMessage,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [Alias('LogPath')]
-        [string]$Path='C:\Logs\PowerShellLog.log',
-        [Parameter(Mandatory=$false)]
-        [ValidateSet("Error","Warn","Info")]
-        [string]$Level="Info",
-        [Parameter(Mandatory=$false)]
+        [string]$Path = 'C:\Logs\PowerShellLog.log',
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("Error", "Warn", "Info")]
+        [string]$Level = "Info",
+        [Parameter(Mandatory = $false)]
         [switch]$NoClobber
-        )
-        Begin {
+    )
+    Begin {
         # Set VerbosePreference to Continue so that verbose messages are displayed.
-        $VerbosePreference='Continue'
-        }
-        Process { 
+        $VerbosePreference = 'Continue'
+    }
+    Process { 
         # If the file already exists and NoClobber was specified, do not write to the log. 
         if ((Test-Path $Path) -AND $NoClobber) {
             Write-Error "Log file $Path already exists, and you specified NoClobber. Either delete the file or specify a different name." 
             Return
-            } 
+        } 
         # If attempting to write to a log file in a folder/path that doesn't exist create the file including the path. 
         elseif (!(Test-Path $Path)) { 
             Write-Verbose "Creating $Path."
