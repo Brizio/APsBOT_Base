@@ -1,64 +1,77 @@
 ﻿
 Param( 
-    [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)][String]$BotName = "NoName",
-    [Parameter(Mandatory = $false, Position = 1, ValueFromPipeline = $true)][String]$botkey = '1705298974:AAGJQb4M1tqExKQPgs_L_78kHrLoZkGF9GY',
-    [Parameter(Mandatory = $false, Position = 2, ValueFromPipeline = $true)][String]$FilePath = "C:\Tmp\",
-    [Parameter(Mandatory = $false, Position = 3, ValueFromPipeline = $true)][switch]$TestBot
+    [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)][String]$BotName ,
+    [Parameter(Mandatory = $true, Position = 1, ValueFromPipeline = $true)][String]$botkey ,
+    [Parameter(Mandatory = $false, Position = 2, ValueFromPipeline = $true)][String]$FilesPath = "C:\Tmp\",
+    [Parameter(Mandatory = $false, Position = 3, ValueFromPipeline = $true)][switch]$TestBot = $false
 )
 Process {
     ########################################################################
     # Inizialization
-    [string]$ScriptName = $BotName
-    [string]$BotName = $BotName
-    [string]$AdminUserNames = 'FabryMazzu'
-    [switch]$FileBackupAtLaunch = $true
-
-    $host.ui.RawUI.WindowTitle = $ScriptName + ' - ' + $FilePath  
+    $ConfigFile = "config.json"
+    if (Test-Path $ConfigFile) {
+        #Config File Found Loading ...
+        $ConfigJson = (Get-Content ".\config.json" -Raw) | ConvertFrom-Json
+        #$ConfigJson.BotSettings
+        [string]$ScriptName = $ConfigJson.BotSettings.BotName
+        [string]$BotName = $ConfigJson.BotSettings.BotName
+        [string]$FilesPath = $ConfigJson.BotSettings.FilesPath
+        [array]$AdminUserNames = $ConfigJson.BotSettings.AdminUserNames
+        [switch]$FileBackupAtLaunch = $true
+    } else {
+        # Getting Confing From Ps Command Parameters
+        [string]$ScriptName = $BotName
+        [string]$BotName = $BotName
+        [array]$AdminUserNames = 'FabryMazzu'
+        [switch]$FileBackupAtLaunch = $true
+    }
+    $host.ui.RawUI.WindowTitle = $ScriptName + ' - ' + $FilesPath + ' - Started @ ' + (Get-Date -format 'yyyy-MM-dd hh:mm:ss').tostring()
     $runningPath = Split-Path -Path $SCRIPT:MyInvocation.MyCommand.Path -Parent
     # $runningPath = "$ENV:OneDrive\_MyPs\PS-Repo\MyProjects\Bots\AloneBot"
-    $dtInizio = (Get-Date -format 'yyyy-MM-dd hh:mm:ss').tostring()
+    #$dtInizio = (Get-Date -format 'yyyy-MM-dd hh:mm:ss').tostring()
     $dtlog = (Get-Date -format 'yyyyMMdd').tostring()
     $Error.Clear()
     Start-Sleep -Seconds 1
-    # Get the local Resources 
-    #if ($FilePath = "C:\Tmp") {$FilePath = "C:\Tmp\$BotName"}
-    $FilePath = $FilePath + "\$BotName"
+    <##########################>
+    # Set local Resources 
+    $FilesPath = $FilesPath + "$BotName"
     $LogPath = "$runningPath\logs\"
     $ExtFunctionsPath = "$runningPath\Functions\"
     $ResFilesPath = "$runningPath\ResourceFiles\"
     $LogFile = "$LogPath\log-$dtlog.log"
     $ErrorsFile = "$LogPath\Errors-$dtlog.log"
-    if (-not (Test-Path $FilePath)) { mkdir $FilePath }
-    $ArchivePath = "$FilePath\Archive\"
-    $TmpStoragePath = "$FilePath\TmpStorage\"
-    $BckPath = "$FilePath\Bck\"
+    if (-not (Test-Path $FilesPath)) { mkdir $FilesPath | Out-Null }
+    $ArchivePath = "$FilesPath\Archive\"
+    $TmpStoragePath = "$FilesPath\TmpStorage\"
+    $BckPath = "$FilesPath\Bck\"
     #Files
-    $UserDBFile = "$FilePath\Users.json"
-    $ChatDBFile = "$FilePath\Chats.json"
-    $MessageDBFile = "$FilePath\jsons-$dtlog.json"
-    $TranscriptFile = "$FilePath\Transcript-$dtlog.txt"
+    $UserDBFile = "$FilesPath\Users.json"
+    $ChatDBFile = "$FilesPath\Chats.json"
+    $MessageDBFile = "$FilesPath\jsons-$dtlog.json"
+    $TranscriptFile = "$FilesPath\Transcript-$dtlog.txt"
     $imageFile = "$ResFilesPath\t_logo.png"
     $WipPhoto = "$ResFilesPath\Under-construction.png"
 
     <##########################>
     #Create Folders
-    if (-not (Test-Path -Path $LogPath) ) { New-Item -Path $LogPath -ItemType container }
-    if (-not (Test-Path -Path $ExtFunctionsPath) ) { New-Item -Path $ExtFunctionsPath -ItemType container }
-    if (-not (Test-Path -Path $ResFilesPath) ) { New-Item -Path $ResFilesPath -ItemType container }
-    if (-not (Test-Path -Path $ArchivePath) ) { New-Item -Path $ArchivePath -ItemType container }
-    if (-not (Test-Path -Path $TmpStoragePath) ) { New-Item -Path $TmpStoragePath -ItemType container }
-    if (-not (Test-Path -Path $BckPath) ) { New-Item -Path $BckPath -ItemType container }
-    # Load Bot Param
-    $timeout = 59
-    $offset = 0
-    $SecondsToSleep = 2
-    $Backlog = $True
+    if (-not (Test-Path -Path $LogPath) ) { New-Item -Path $LogPath -ItemType container  | Out-Null }
+    if (-not (Test-Path -Path $ExtFunctionsPath) ) { New-Item -Path $ExtFunctionsPath -ItemType container  | Out-Null }
+    if (-not (Test-Path -Path $ResFilesPath) ) { New-Item -Path $ResFilesPath -ItemType container  | Out-Null }
+    if (-not (Test-Path -Path $ArchivePath) ) { New-Item -Path $ArchivePath -ItemType container  | Out-Null }
+    if (-not (Test-Path -Path $TmpStoragePath) ) { New-Item -Path $TmpStoragePath -ItemType container  | Out-Null }
+    if (-not (Test-Path -Path $BckPath) ) { New-Item -Path $BckPath -ItemType container  | Out-Null }
+    <##########################>
+    # Bot Param
+        $Timeout = $ConfigJson.RunningSettings.Timeout
+        $Offset = $ConfigJson.RunningSettings.Offset
+        $SecondsToSleep = $ConfigJson.RunningSettings.SecondsToSleep
+        $Backlog = $ConfigJson.RunningSettings.Backlog
     #Set Verbose Output
-    if ($verbose) { $VerbosePreference = 'continue' }
-    # Init Variable
-    $Firststart = $true
-    [string]$uploadedPhotoId = $null
-    [string]$uploadedDocumentId = $null
+        if ($verbose) { $VerbosePreference = 'continue' }
+    # Init Variables
+        $Firststart = $true
+        [string]$uploadedPhotoId = $null
+        [string]$uploadedDocumentId = $null
     <##########################>
     # Load Bot Api
     . $ExtFunctionsPath\Load-BotLinks.ps1
@@ -110,15 +123,13 @@ Process {
         Write-log -Path $LogFile -Level Info -LogMessage ('Find ' + $json.result.username + ' in Telegram and send him a message - it will be displayed here')
         Write-Verbose -Message '(Press ctrl + c to stop listening and quit)'
     }
-    # Funziona e vado avanti
-    $Firststart = $true
+    # Everythings it's working fine, start running
     $BotID = $json.result.id
     $BotName = $json.result.first_name
     $BotUsername = $json.result.username
     Write-log -Path $LogFile -Level Info -LogMessage ( "BotID = $BotID , BotName = $BotName , BotUsername = $BotUsername ")
-
     if ($TestBot) {
-        Write-log -Path $LogFile -Level Info -LogMessage ( 'Bot Init successiful, Exit for test param')
+        Write-log -Path $LogFile -Level Info -LogMessage ('Bot Init successiful, Exit for test param')
         Exit 
     }
     # Set last Offset to avoid backlog
@@ -137,14 +148,13 @@ Process {
             $Res = Test-InternetConnection
             if ($Res -eq 'KO') { Start-Sleep -Seconds $timeout } 
         } while ($Res -eq 'KO')
-        $start = Get-Date -Format 'dd/MM/yyyy hh:mm:ss'
-        Write-Verbose -Message "// Start time : $start //"
-        #Aggiorno Runtime le funzioni
+        $StartTime = Get-Date -Format 'dd/MM/yyyy hh:mm:ss'
+        Write-Verbose -Message "// Start time : $StartTime //"
+        # Runtime functions update  
         . $ExtFunctionsPath\Load-BotFunctions.ps1
         . $ExtFunctionsPath\Load-CommandFunctions.ps1
         Write-Verbose -Message '// Re-Load BotFunctions //'
-        ## New day
-        # Se   un nuovo giorno devo reinizializzare i file dei log e alcune variabili
+        ## If this is a new day I have to initialize the log files and some variables
         $ThisDay = (Get-Date -format 'yyyyMMdd').tostring()
         if ( $dtlog -ne $ThisDay ) { 
             $dtlog = $ThisDay
@@ -182,7 +192,7 @@ Process {
 
             <##############################################################>
             ## Add User in the Json
-            if (-not (Test-Path -Path $UserDBFile)) { Write-Verbose -Message "// Errore Grave, non inizializzati File:  $UserDBFile " }
+            if (-not (Test-Path -Path $UserDBFile)) { Write-Verbose -Message "// Critical Error, Uninitialized File:  $UserDBFile " }
             # $PreviousUserJson =  Get-Content $UserDBFile -raw | ConvertFrom-Json
             $UserClone = $UserDB  # $PreviousUserJson
             # if ($PreviousUserJson -eq $null) { $FinalUserJson = $json.result[$i].message.from ; $FinalUserJson | ConvertTo-Json -depth 100 | Out-File $UserDBFile } Else { 
@@ -193,7 +203,7 @@ Process {
             } # }
             
             ## Add Chat in the Json
-            if (-not (Test-Path -Path $ChatDBFile)) { Write-Verbose -Message "// Errore Grave, non inizializzati File:  $ChatDBFile " }
+            if (-not (Test-Path -Path $ChatDBFile)) { Write-Verbose -Message "// Critical Error, Uninitialized File:  $ChatDBFile " }
             # $PreviousChatJson =  Get-Content $ChatDBFile -raw | ConvertFrom-Json
             $ChatClone = $ChatDB
             #if ($PreviousChatJson -eq $null) { $FinalChatJson = $json.result[$i].message.chat ; $FinalChatJson | ConvertTo-Json -depth 100 | Out-File $ChatDBFile } Else { 
@@ -239,6 +249,7 @@ Process {
                 { $_ -in 'A', 'B', 'C' } { SendMessage -Message "Complimenti hai scritto una delle prime 3 lettere dell'alfabeto!" -ToChatID $json.result[$i].message.chat.id }
                 'Test1' { SendMessage -Message ('Complimenti @' + $json.result[$i].message.from.username + ' stai eseguendo il Test1') -ToChatID $json.result[$i].message.chat.id -reply_to_message_id $json.result[$i].message.message_id -parse_mode 'Markdown' }
                 'CatFact' { SendMessage -Message (CatFact) -ToChatID $json.result[$i].message.chat.id }
+                'Excuse' { SendMessage -Message (Get-Excuse) -ToChatID $json.result[$i].message.chat.id}
                 Default {}
             }
             ### Process bot's commands 

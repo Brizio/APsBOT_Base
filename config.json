@@ -1,0 +1,14 @@
+{
+    "BotSettings": {
+        "BotName": "Bot",
+        "FilesPath": "C:/Tmp/",
+        "AdminUserNames": ["FabryMazzu", "Admin"],
+        "FileBackupAtLaunch": "$true"
+    },
+    "RunningSettings": {
+        "Timeout": "59",
+        "Offset": "0",
+        "SecondsToSleep": "2",
+        "Backlog": "$True"
+    }
+}

@@ -65,6 +65,18 @@ Function CmdHelp {
     $k.one_time_keyboard = $true
     SendMessage -Message "Here is all my commands" -ToChatID $json.result[$i].message.chat.id -reply_markup ($k | ConvertTo-Json)
 }
+function Get-Excuse {
+    $Wr = Invoke-WebRequest -URI http://pages.cs.wisc.edu/~ballard/bofh/excuses
+    $Wr.RawContent -split '\r?\n' | Get-Random
+    
+    #(Invoke-WebRequest http://pages.cs.wisc.edu/~ballard/bofh/excuses -OutVariable OnlineEexcuses).content.split([Environment]::NewLine) -split '\r?\n' | Get-Random
+    #$count = (Invoke-WebRequest http://pages.cs.wisc.edu/~ballard/bofh/excuses -OutVariable OnlineEexcuses).content.split([Environment]::NewLine) | Measure-Object –Line
+    #$Excuses = $OnlineEexcuses.content.split([Environment]::NewLine) 
+    # $Ran = Get-Random $count.Lines 
+    # Get-Random -InputObject ( $OnlineEexcuses.content.split([Environment]::NewLine) )
+    #Get-Random -InputObject ($OnlineEexcuses -split '\r?\n')
+}
+
 Function CmdRestart { 
     if ($json.result[$i].message.from.username -in ($AdminUserNames)) {
         # SaveToDB

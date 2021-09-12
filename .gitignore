@@ -10,3 +10,6 @@ Chat.json
 Transcript-*.txt
 jsons-*.json
 messages-*.json
+
+# Personal Testing Files
+StartTest.ps1
